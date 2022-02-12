@@ -1,0 +1,19 @@
+includeFile = /Applications/topas/examples/Basic/Isotope.txt
+
+s:Sc/CountNeutron/Quantity = "OriginCount"
+s:Sc/CountNeutron/Component = "MyBox"
+b:Sc/CountNeutron/OutputToConsole = "True"
+s:Sc/CountNeutron/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/CountNeutron/OnlyIncludeParticlesNamed = 1 "neutron"
+
+s:Sc/CountElectron/Quantity = "OriginCount"
+s:Sc/CountElectron/Component = "MyBox"
+b:Sc/CountElectron/OutputToConsole = "True"
+s:Sc/CountElectron/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/CountElectron/OnlyIncludeParticlesNamed = 1 "e-"
+
+s:Sc/CountGamma/Quantity = "OriginCount"
+s:Sc/CountGamma/Component = "MyBox"
+b:Sc/CountGamma/OutputToConsole = "True"
+s:Sc/CountGamma/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/CountGamma/OnlyIncludeParticlesNamed = 1 "gamma"
