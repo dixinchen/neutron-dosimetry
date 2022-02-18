@@ -45,10 +45,6 @@ uv:Ma/TungstenAlloy/Fractions				=3 0.925 0.052 0.023
 d:Ma/TungstenAlloy/Density					=17.5 g/cm3 	# this is the density of alloy 92.5% W, 5.25% Ni, 2.25% Fe
 sc:Ma/TungstenAlloy/DefaultColor			="Grey"
 
-sv:Ma/Tungsten/Components = 1 "Tungsten"
-uv:Ma/Tungsten/Fractions  = 1 1 
-d:Ma/Tungsten/Density     = 19.3 g/cm3
-
 # Define tungsten alloy MLC (20 pairs)
 s:Ge/MLC/Type	     = "TsBox"
 s:Ge/MLC/Parent 	 = "World"
@@ -68,42 +64,7 @@ d:Ge/MLC/RotZ	     = 0.0 deg
 
 #################################################################
 
-# Define a water tank
-s:Ge/WaterTank/Type	     	 = "TsBox"
-s:Ge/WaterTank/Parent 	     = "World"
-s:Ge/WaterTank/Material      = "G4_WATER"
-s:Ge/WaterTank/Color	     = "aqua"
-b:Ge/WaterTank/Invisible	 = "False"
-dc:Ge/WaterTank/HLX 	     = 30 cm
-dc:Ge/WaterTank/HLY 	     = 30 cm
-dc:Ge/WaterTank/HLZ 	     = 30 cm
-d:Ge/WaterTank/TransX	     = 0.0 cm
-d:Ge/WaterTank/TransY	     = 0.0 cm
-d:Ge/WaterTank/TransZ	     = 0.0 cm    # measurement point 10 cm downstream from the distal side
-d:Ge/WaterTank/RotX	     	 = 180.0 deg
-d:Ge/WaterTank/RotY	     	 = 0.0 deg
-d:Ge/WaterTank/RotZ	     	 = 0.0 deg
-# i:Ge/WaterTank/XBins 	     = 600
-# i:Ge/WaterTank/YBins 	     = 600
-# i:Ge/WaterTank/ZBins 	     = 3000
-
-#################################################################
-
 # Score number of neutrons, e- and gamma
-s:Sc/OriginCountElectronWater/Quantity                  	= "OriginCount"
-s:Sc/OriginCountElectronWater/Component 					= "WaterTank"
-s:Sc/OriginCountElectronWater/IfOutputFileAlreadyExists 	= "Overwrite"
-sv:Sc/OriginCountElectronWater/OnlyIncludeParticlesNamed 	= 1 "e-" 
-
-s:Sc/OriginCountGammaWater/Quantity                  		= "OriginCount"
-s:Sc/OriginCountGammaWater/Component 						= "WaterTank"
-s:Sc/OriginCountGammaWater/IfOutputFileAlreadyExists 		= "Overwrite"
-sv:Sc/OriginCountGammaWater/OnlyIncludeParticlesNamed 		= 1 "gamma"
-
-s:Sc/OriginCountNeutronWater/Quantity                  		= "OriginCount"
-s:Sc/OriginCountNeutronWater/Component 						= "WaterTank"
-s:Sc/OriginCountNeutronWater/IfOutputFileAlreadyExists 		= "Overwrite"
-sv:Sc/OriginCountNeutronWater/OnlyIncludeParticlesNamed 	= 1 "neutron"
 
 s:Sc/OriginCountElectronMLC/Quantity                  		= "OriginCount"
 s:Sc/OriginCountElectronMLC/Component 						= "MLC"
@@ -121,13 +82,6 @@ s:Sc/OriginCountNeutronMLC/IfOutputFileAlreadyExists 		= "Overwrite"
 sv:Sc/OriginCountNeutronMLC/OnlyIncludeParticlesNamed 		= 1 "neutron"
 
 
-s:Sc/DoseAtWater/Quantity                  = "DoseToMedium"
-sc:Sc/DoseAtWater/Component                = "WaterTank"
-ic:Sc/DoseAtWater/ZBins 				   = 60
-b:Sc/DoseAtWater/OutputToConsole           = "TRUE"
-s:Sc/DoseAtWater/IfOutputFileAlreadyExists = "Overwrite"
-
-
 s:Sc/DoseAtMLC/Quantity                    = "DoseToMedium"
 sc:Sc/DoseAtMLC/Component                  = "MLC"
 ic:Sc/DoseAtMLC/ZBins 					   = 60
@@ -137,7 +91,7 @@ s:Sc/DoseAtMLC/IfOutputFileAlreadyExists   = "Overwrite"
 #################################################################
 
 # Physics list
-sv:Ph/Default/Modules = 1 "g4em-standard_opt4"
+sv:Ph/Default/Modules = 1 "g4em-standard_opt0"
 
 #################################################################
 
