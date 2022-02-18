@@ -1,8 +1,9 @@
 # Define the world
 s:Ge/World/Material  = "Vacuum"
-d:Ge/World/HLX       = 5.0 cm
-d:Ge/World/HLY       = 5.0 cm
-d:Ge/World/HLZ       = 5.0 cm
+d:Ge/World/HLX       = 0.5 m
+d:Ge/World/HLY       = 0.5 m
+d:Ge/World/HLZ       = 0.5 m
+s:Ge/World/Color = "yellow"
 b:Ge/World/Invisible = "False"
 
 # Define the Water Tank
@@ -12,9 +13,9 @@ s:Ge/WaterTank/Material      = "G4_WATER"
 s:Ge/WaterTank/Color	     = "aqua"
 s:Ge/WaterTank/DrawingStyle  = "WireFrame" # Options are: "WireFrame", "Solid", "FullWireFrame"
 b:Ge/WaterTank/Invisible    = "False"
-d:Ge/WaterTank/HLX 	     = 2.5 cm
-d:Ge/WaterTank/HLY 	     = 2.5 cm
-d:Ge/WaterTank/HLZ 	     = 5 cm
+dc:Ge/WaterTank/HLX 	     = 30 cm
+dc:Ge/WaterTank/HLY 	     = 30 cm
+dc:Ge/WaterTank/HLZ 	     = 30 cm
 d:Ge/WaterTank/TransX	     = 0.0 cm
 d:Ge/WaterTank/TransY	     = 0.0 cm
 d:Ge/WaterTank/TransZ	     = 0.0 cm
@@ -25,48 +26,52 @@ d:Ge/WaterTank/RotZ	     = 0.0 deg
 # i:Ge/WaterTank/YBins 	     = 600
 # i:Ge/WaterTank/ZBins 	     = 3000
 
-# Define the physics (This is the clinical list)
-s:Ph/ListName         = "Default"
-b:Ph/ListProcesses    = "True" 
-s:Ph/Default/Type     = "Geant4_Modular"
-sv:Ph/Default/Modules = 6  "g4em-standard_opt4" "g4h-phy_QGSP_BIC_HP" "g4decay" "g4ion-binarycascade" "g4h-elastic_HP" "g4stopping" 
-d:Ph/Default/EMRangeMax = 500. MeV
-#d:Ph/Default/CutForElectron = 10 mm
-#d:Ph/Default/CutForGamma = 100 m
-d:Ph/Default/CutForAllParticles = 0 mm # single range cut to use for all particles
+sv:Ph/Default/Modules = 1 "g4em-standard_opt4"
 
-# Define the beam
-s:So/Beam1/Type                     = "Beam"
-s:So/Beam1/Component                = "BeamPosition"
-s:So/Beam1/BeamParticle             = "proton"
-d:So/Beam1/BeamEnergy               = 160 MeV
-u:So/Beam1/BeamEnergySpread         = 0.757504
-s:So/Beam1/BeamPositionDistribution = "Gaussian"
-s:So/Beam1/BeamPositionCutoffShape  = "Ellipse"
-d:So/Beam1/BeamPositionCutoffX      = 10 cm   # X extent of position (if Flat or Gaussian)
-d:So/Beam1/BeamPositionCutoffY      = 10 cm   # Y extent of position (if Flat or Gaussian)
-d:So/Beam1/BeamPositionSpreadX      = 0.30 cm  # distribution (if Gaussian)
-d:So/Beam1/BeamPositionSpreadY      = 0.30 cm  # distribution (if Gaussian)
-s:So/Beam1/BeamAngularDistribution  = "None"
-d:So/Beam1/BeamAngularCutoffX       = 90. deg
-d:So/Beam1/BeamAngularCutoffY       = 90. deg
-d:So/Beam1/BeamAngularSpreadX       = 0.0 deg
-d:So/Beam1/BeamAngularSpreadY       = 0.0 deg
-i:So/Beam1/NumberOfHistoriesInRun  = 10000
+# # Define the beam
+# s:So/Beam1/Type                     = "Beam"
+# s:So/Beam1/Component                = "BeamPosition"
+# s:So/Beam1/BeamParticle             = "proton"
+# dc:So/Beam1/BeamEnergy               = 200 MeV
+# u:So/Beam1/BeamEnergySpread         = 0.757504
+# s:So/Beam1/BeamPositionDistribution = "Gaussian"
+# s:So/Beam1/BeamPositionCutoffShape  = "Ellipse"
+# d:So/Beam1/BeamPositionCutoffX      = 10 cm   # X extent of position (if Flat or Gaussian)
+# d:So/Beam1/BeamPositionCutoffY      = 10 cm   # Y extent of position (if Flat or Gaussian)
+# d:So/Beam1/BeamPositionSpreadX      = 0.30 cm  # distribution (if Gaussian)
+# d:So/Beam1/BeamPositionSpreadY      = 0.30 cm  # distribution (if Gaussian)
+# s:So/Beam1/BeamAngularDistribution  = "None"
+# d:So/Beam1/BeamAngularCutoffX       = 90. deg
+# d:So/Beam1/BeamAngularCutoffY       = 90. deg
+# d:So/Beam1/BeamAngularSpreadX       = 0.0 deg
+# d:So/Beam1/BeamAngularSpreadY       = 0.0 deg
+# ic:So/Beam1/NumberOfHistoriesInRun  = 5000
+s:So/Example/Type                     = "Beam"
+s:So/Example/Component                = "BeamPosition"
+sc:So/Example/BeamParticle             = "proton"
+dc:So/Example/BeamEnergy               = 200.0 MeV
+u:So/Example/BeamEnergySpread         = 0.757504
+s:So/Example/BeamPositionDistribution = "Gaussian"
+s:So/Example/BeamPositionCutoffShape  = "Ellipse"
+d:So/Example/BeamPositionCutoffX      = 10. cm
+d:So/Example/BeamPositionCutoffY      = 10. cm
+d:So/Example/BeamPositionSpreadX      = 0.65 cm
+d:So/Example/BeamPositionSpreadY      = 0.65 cm
+s:So/Example/BeamAngularDistribution  = "Gaussian"
+d:So/Example/BeamAngularCutoffX       = 90. deg
+d:So/Example/BeamAngularCutoffY       = 90. deg
+d:So/Example/BeamAngularSpreadX       = 0.0032 rad
+d:So/Example/BeamAngularSpreadY       = 0.0032 rad
+ic:So/Example/NumberOfHistoriesInRun   = 10000
 
 s:Ge/BeamPosition/Parent = "World"
 s:Ge/BeamPosition/Type   = "Group"
 d:Ge/BeamPosition/TransX = 0. cm
 d:Ge/BeamPosition/TransY = 0. cm
-d:Ge/BeamPosition/TransZ = 5.0001 cm
+d:Ge/BeamPosition/TransZ = 0.5 m
 d:Ge/BeamPosition/RotX   = 180. deg
 d:Ge/BeamPosition/RotY   = 0. deg
 d:Ge/BeamPosition/RotZ   = 0. deg
-
-# All the boxes inserted into the first box
-
-
-
 
 
 s:Sc/OriginCount_proton/Quantity                  = "OriginCount"
@@ -115,9 +120,7 @@ b:Gr/ViewA/HiddenLineRemovalForTrajectories = "True"
 
 
 
-
-
 # Core-count
-i:Ts/NumberOfThreads = 12
+i:Ts/NumberOfThreads = 7
 
 

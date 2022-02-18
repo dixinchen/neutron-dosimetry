@@ -1,0 +1,173 @@
+# Define the world
+s:Ge/World/Material  = "Vacuum"
+d:Ge/World/HLX       = 1. m
+d:Ge/World/HLY       = 1. m
+d:Ge/World/HLZ       = 1. m
+s:Ge/World/Color 	 = "yellow"
+b:Ge/World/Invisible = "False"
+
+#################################################################
+
+# Define the proton beam
+s:So/ProtonBeam/Type                     = "Beam"
+s:So/ProtonBeam/Component                = "BeamPosition"
+sc:So/ProtonBeam/BeamParticle            = "proton"
+dc:So/ProtonBeam/BeamEnergy              = 230.0 MeV
+u:So/ProtonBeam/BeamEnergySpread         = 0.757504
+s:So/ProtonBeam/BeamPositionDistribution = "Gaussian"
+s:So/ProtonBeam/BeamPositionCutoffShape  = "Ellipse"
+d:So/ProtonBeam/BeamPositionCutoffX      = 10. cm
+d:So/ProtonBeam/BeamPositionCutoffY      = 10. cm
+d:So/ProtonBeam/BeamPositionSpreadX      = 0.65 cm
+d:So/ProtonBeam/BeamPositionSpreadY      = 0.65 cm
+s:So/ProtonBeam/BeamAngularDistribution  = "Gaussian"
+d:So/ProtonBeam/BeamAngularCutoffX       = 90. deg
+d:So/ProtonBeam/BeamAngularCutoffY       = 90. deg
+d:So/ProtonBeam/BeamAngularSpreadX       = 0.0032 rad
+d:So/ProtonBeam/BeamAngularSpreadY       = 0.0032 rad
+ic:So/ProtonBeam/NumberOfHistoriesInRun  = 10
+
+# Define beam position
+s:Ge/BeamPosition/Parent = "World"
+s:Ge/BeamPosition/Type   = "Group"
+d:Ge/BeamPosition/TransX = 0. cm
+d:Ge/BeamPosition/TransY = 0. cm
+d:Ge/BeamPosition/TransZ = 1. m
+d:Ge/BeamPosition/RotX   = 180. deg
+d:Ge/BeamPosition/RotY   = 0. deg
+d:Ge/BeamPosition/RotZ   = 0. deg
+
+#################################################################
+
+# Define the alloy material for the MLC
+sv:Ma/TungstenAlloy/Components				=3 "Tungsten" "Nickel" "Copper"
+uv:Ma/TungstenAlloy/Fractions				=3 0.925 0.052 0.023
+d:Ma/TungstenAlloy/Density					=17.5 g/cm3 	# this is the density of alloy 92.5% W, 5.25% Ni, 2.25% Fe
+sc:Ma/TungstenAlloy/DefaultColor			="Grey"
+
+sv:Ma/Tungsten/Components = 1 "Tungsten"
+uv:Ma/Tungsten/Fractions  = 1 1 
+d:Ma/Tungsten/Density     = 19.3 g/cm3
+
+# Define tungsten alloy MLC (20 pairs)
+s:Ge/MLC/Type	     = "TsBox"
+s:Ge/MLC/Parent 	 = "World"
+sc:Ge/MLC/Material   = "TungstenAlloy"
+# sc:Ge/MLC/Material   = "Tungsten"
+s:Ge/MLC/Color 		 = "Grey"
+b:Ge/MLC/Invisible   = "False"
+dc:Ge/MLC/HLX 	     = 10 cm 	# estimated from Fig. 2
+dc:Ge/MLC/HLY 	     = 43.5 mm  # width 4.35 mm, 20 pairs
+dc:Ge/MLC/HLZ 	     = 4.5 cm 	# thickness 9 cm
+d:Ge/MLC/TransX	     = 0.0 cm
+d:Ge/MLC/TransY	     = 0.0 cm
+d:Ge/MLC/TransZ	     = 40 cm
+d:Ge/MLC/RotX	     = 180.0 deg
+d:Ge/MLC/RotY	     = 0.0 deg
+d:Ge/MLC/RotZ	     = 0.0 deg
+
+#################################################################
+
+# Define a water tank
+s:Ge/WaterTank/Type	     	 = "TsBox"
+s:Ge/WaterTank/Parent 	     = "World"
+s:Ge/WaterTank/Material      = "G4_WATER"
+s:Ge/WaterTank/Color	     = "aqua"
+b:Ge/WaterTank/Invisible	 = "False"
+dc:Ge/WaterTank/HLX 	     = 30 cm
+dc:Ge/WaterTank/HLY 	     = 30 cm
+dc:Ge/WaterTank/HLZ 	     = 30 cm
+d:Ge/WaterTank/TransX	     = 0.0 cm
+d:Ge/WaterTank/TransY	     = 0.0 cm
+d:Ge/WaterTank/TransZ	     = 0.0 cm    # measurement point 10 cm downstream from the distal side
+d:Ge/WaterTank/RotX	     	 = 180.0 deg
+d:Ge/WaterTank/RotY	     	 = 0.0 deg
+d:Ge/WaterTank/RotZ	     	 = 0.0 deg
+# i:Ge/WaterTank/XBins 	     = 600
+# i:Ge/WaterTank/YBins 	     = 600
+# i:Ge/WaterTank/ZBins 	     = 3000
+
+#################################################################
+
+# Score number of neutrons, e- and gamma
+s:Sc/OriginCountElectronWater/Quantity                  	= "OriginCount"
+s:Sc/OriginCountElectronWater/Component 					= "WaterTank"
+s:Sc/OriginCountElectronWater/IfOutputFileAlreadyExists 	= "Overwrite"
+sv:Sc/OriginCountElectronWater/OnlyIncludeParticlesNamed 	= 1 "e-" 
+
+s:Sc/OriginCountGammaWater/Quantity                  		= "OriginCount"
+s:Sc/OriginCountGammaWater/Component 						= "WaterTank"
+s:Sc/OriginCountGammaWater/IfOutputFileAlreadyExists 		= "Overwrite"
+sv:Sc/OriginCountGammaWater/OnlyIncludeParticlesNamed 		= 1 "gamma"
+
+s:Sc/OriginCountNeutronWater/Quantity                  		= "OriginCount"
+s:Sc/OriginCountNeutronWater/Component 						= "WaterTank"
+s:Sc/OriginCountNeutronWater/IfOutputFileAlreadyExists 		= "Overwrite"
+sv:Sc/OriginCountNeutronWater/OnlyIncludeParticlesNamed 	= 1 "neutron"
+
+s:Sc/OriginCountElectronMLC/Quantity                  		= "OriginCount"
+s:Sc/OriginCountElectronMLC/Component 						= "MLC"
+s:Sc/OriginCountElectronMLC/IfOutputFileAlreadyExists 		= "Overwrite"
+sv:Sc/OriginCountElectronMLC/OnlyIncludeParticlesNamed 		= 1 "e-" 
+
+s:Sc/OriginCountGammaMLC/Quantity                 			= "OriginCount"
+s:Sc/OriginCountGammaMLC/Component 							= "MLC"
+s:Sc/OriginCountGammaMLC/IfOutputFileAlreadyExists 			= "Overwrite"
+sv:Sc/OriginCountGammaMLC/OnlyIncludeParticlesNamed 		= 1 "gamma"
+
+s:Sc/OriginCountNeutronMLC/Quantity                  		= "OriginCount"
+s:Sc/OriginCountNeutronMLC/Component 						= "MLC"
+s:Sc/OriginCountNeutronMLC/IfOutputFileAlreadyExists 		= "Overwrite"
+sv:Sc/OriginCountNeutronMLC/OnlyIncludeParticlesNamed 		= 1 "neutron"
+
+
+s:Sc/DoseAtWater/Quantity                  = "DoseToMedium"
+sc:Sc/DoseAtWater/Component                = "WaterTank"
+ic:Sc/DoseAtWater/ZBins 				   = 60
+b:Sc/DoseAtWater/OutputToConsole           = "TRUE"
+s:Sc/DoseAtWater/IfOutputFileAlreadyExists = "Overwrite"
+
+
+s:Sc/DoseAtMLC/Quantity                    = "DoseToMedium"
+sc:Sc/DoseAtMLC/Component                  = "MLC"
+ic:Sc/DoseAtMLC/ZBins 					   = 60
+b:Sc/DoseAtMLC/OutputToConsole             = "TRUE"
+s:Sc/DoseAtMLC/IfOutputFileAlreadyExists   = "Overwrite"
+
+#################################################################
+
+# Physics list
+sv:Ph/Default/Modules = 1 "g4em-standard_opt4"
+
+#################################################################
+
+# Visualization
+s:Gr/ViewA/Type                             = "OpenGL"
+i:Gr/ViewA/WindowSizeX                      = 900
+i:Gr/ViewA/WindowSizeY                      = 900
+b:Gr/ViewA/IncludeAxes      				= "True"
+d:Gr/ViewA/Theta                            = 55 deg
+d:Gr/ViewA/Phi                              = 20 deg
+s:Gr/ViewA/Projection                       = "Perspective"
+d:Gr/ViewA/PerspectiveAngle                 = 30 deg
+u:Gr/ViewA/Zoom                             = 1.3
+b:Gr/ViewA/HiddenLineRemovalForTrajectories = "True"
+
+#################################################################
+
+# Multithreading
+i:Ts/NumberOfThreads = 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
