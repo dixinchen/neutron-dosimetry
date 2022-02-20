@@ -1,0 +1,8 @@
+# TOPAS Version: 3.7
+# Parameter File: shielding.txt
+# Results for scorer scorerLog
+# Scored in component: subComponent11
+# Fluence ( /mm2 ) : Sum   
+# Binned by incident track energy in 100 bins of 0.0404179 MeV from 0.01 MeV to 110.1 MeV
+# First bin is underflow, next to last bin is overflow, last bin is for case of no incident track.
+# Binary file: FluenceSpectra_LogBin.bin

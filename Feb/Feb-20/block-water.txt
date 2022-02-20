@@ -1,0 +1,228 @@
+includeFile = /Users/dchen/Documents/Penn/Project/neutron-dosimetry/visualization.txt
+
+##########################
+# Define the world
+##########################
+s:Ge/World/Material  = "Vacuum"
+d:Ge/World/HLX       = 2. m
+d:Ge/World/HLY       = 2. m
+d:Ge/World/HLZ       = 2. m
+s:Ge/World/Color 	 = "yellow"
+b:Ge/World/Invisible = "False"
+
+
+##########################
+# Define alloy material
+##########################
+sv:Ma/TungstenAlloy/Components		=3 "Tungsten" "Nickel" "Copper"
+uv:Ma/TungstenAlloy/Fractions		=3 0.925 0.052 0.023
+d:Ma/TungstenAlloy/Density			=17.5 g/cm3  #the density of alloy 92.5% W, 5.25% Ni, 2.25% Fe
+sc:Ma/TungstenAlloy/DefaultColor	="Grey"
+
+sv:Ma/Tungsten/Components			= 1 "Tungsten"
+uv:Ma/Tungsten/Fractions  			= 1 1 
+d:Ma/Tungsten/Density     			= 19.3 g/cm3
+
+
+##########################
+# Define MLC (20 pairs)
+##########################
+s:Ge/MLC/Type	     = "TsBox"
+s:Ge/MLC/Parent 	 = "World"
+sc:Ge/MLC/Material   = "G4_CONCRETE"	# "TungstenAlloy", "Tungsten", "G4_CONCRETE"
+s:Ge/MLC/Color 		 = "Grey"
+b:Ge/MLC/Invisible   = "False"
+dc:Ge/MLC/HLX 	     = 10 cm 	# estimated from Fig. 2
+dc:Ge/MLC/HLY 	     = 43.5 mm  # width 4.35 mm, 20 pairs
+dc:Ge/MLC/HLZ 	     = 4.5 cm 	# thickness 9 cm
+d:Ge/MLC/TransX	     = 0.0 cm
+d:Ge/MLC/TransY	     = 0.0 cm
+d:Ge/MLC/TransZ	     = 40 cm
+d:Ge/MLC/RotX	     = 180.0 deg
+d:Ge/MLC/RotY	     = 0.0 deg
+d:Ge/MLC/RotZ	     = 0.0 deg
+i:Ge/MLC/ZBins 	     = 3000
+
+
+##########################
+# Define a water tank
+##########################
+s:Ge/WaterTank/Type	     	 = "TsBox"
+s:Ge/WaterTank/Parent 	     = "World"
+s:Ge/WaterTank/Material      = "G4_WATER"
+s:Ge/WaterTank/Color	     = "aqua"
+b:Ge/WaterTank/Invisible	 = "False"
+dc:Ge/WaterTank/HLX 	     = 30 cm
+dc:Ge/WaterTank/HLY 	     = 30 cm
+dc:Ge/WaterTank/HLZ 	     = 30 cm
+d:Ge/WaterTank/TransX	     = 0.0 cm
+d:Ge/WaterTank/TransY	     = 0.0 cm
+d:Ge/WaterTank/TransZ	     = 0.0 cm    # measurement point 10 cm downstream from the distal side
+d:Ge/WaterTank/RotX	     	 = 180.0 deg
+d:Ge/WaterTank/RotY	     	 = 0.0 deg
+d:Ge/WaterTank/RotZ	     	 = 0.0 deg
+# i:Ge/WaterTank/XBins 	     = 600
+# i:Ge/WaterTank/YBins 	     = 600
+i:Ge/WaterTank/ZBins 	     = 3000
+
+
+#################################################################
+# Scoring the number of neutrons, e- and gamma in the MLC
+#################################################################
+s:Sc/OriginCountElectronMLC/Quantity                  		= "OriginCount"
+s:Sc/OriginCountElectronMLC/Component 						= "MLC"
+s:Sc/OriginCountElectronMLC/IfOutputFileAlreadyExists 		= "Overwrite"
+sv:Sc/OriginCountElectronMLC/OnlyIncludeParticlesNamed 		= 1 "e-" 
+
+s:Sc/OriginCountGammaMLC/Quantity                 			= "OriginCount"
+s:Sc/OriginCountGammaMLC/Component 							= "MLC"
+s:Sc/OriginCountGammaMLC/IfOutputFileAlreadyExists 			= "Overwrite"
+sv:Sc/OriginCountGammaMLC/OnlyIncludeParticlesNamed 		= 1 "gamma"
+
+s:Sc/OriginCountNeutronMLC/Quantity                  		= "OriginCount"
+s:Sc/OriginCountNeutronMLC/Component 						= "MLC"
+s:Sc/OriginCountNeutronMLC/IfOutputFileAlreadyExists 		= "Overwrite"
+sv:Sc/OriginCountNeutronMLC/OnlyIncludeParticlesNamed 		= 1 "neutron"
+
+
+#################################################################
+# Scoring the number of neutrons, e- and gamma in the water tank
+#################################################################
+s:Sc/OriginCountElectronWater/Quantity                  	= "OriginCount"
+s:Sc/OriginCountElectronWater/Component 					= "WaterTank"
+s:Sc/OriginCountElectronWater/IfOutputFileAlreadyExists 	= "Overwrite"
+sv:Sc/OriginCountElectronWater/OnlyIncludeParticlesNamed 	= 1 "e-" 
+
+s:Sc/OriginCountGammaWater/Quantity                  		= "OriginCount"
+s:Sc/OriginCountGammaWater/Component 						= "WaterTank"
+s:Sc/OriginCountGammaWater/IfOutputFileAlreadyExists 		= "Overwrite"
+sv:Sc/OriginCountGammaWater/OnlyIncludeParticlesNamed 		= 1 "gamma"
+
+s:Sc/OriginCountNeutronWater/Quantity                  		= "OriginCount"
+s:Sc/OriginCountNeutronWater/Component 						= "WaterTank"
+s:Sc/OriginCountNeutronWater/IfOutputFileAlreadyExists 		= "Overwrite"
+sv:Sc/OriginCountNeutronWater/OnlyIncludeParticlesNamed 	= 1 "neutron"
+
+
+########################################
+# Scoring dose in the MLC
+########################################
+s:Sc/DoseAtMLC/Quantity                    = "DoseToMedium"
+sc:Sc/DoseAtMLC/Component                  = "MLC"
+b:Sc/DoseAtMLC/OutputToConsole             = "TRUE"
+s:Sc/DoseAtMLC/IfOutputFileAlreadyExists   = "Overwrite"
+
+
+########################################
+# Scoring dose in the water tank
+########################################
+s:Sc/DoseAtWater/Quantity                  = "DoseToMedium"
+sc:Sc/DoseAtWater/Component                = "WaterTank"
+b:Sc/DoseAtWater/OutputToConsole           = "TRUE"
+s:Sc/DoseAtWater/IfOutputFileAlreadyExists = "Overwrite"
+
+
+########################################
+# Scoring neutron fluence in the MLC
+########################################
+# # Fix binwidth
+# sv:Sc/scorerFix/OnlyIncludeParticlesNamed = 1 "neutron"
+# s:Sc/scorerFix/Quantity                   = "Fluence"
+# s:Sc/scorerFix/Component                  = "MLC"
+# s:Sc/scorerFix/OutputFile                 = "FluenceSpectra_FixedBin"
+# s:Sc/scorerFix/IfOutputFileAlreadyExists  = "Overwrite"
+# s:Sc/scorerFix/OutputType 				  = "csv"	# "binary", "csv"
+# i:Sc/scorerFix/EBins                      = 100
+# d:Sc/scorerFix/EBinMin                    = 0.01 MeV
+# d:Sc/scorerFix/EBinMax                    = 110.1 MeV
+
+# # Logarithmic binwidth
+# sv:Sc/scorerLog/OnlyIncludeParticlesNamed = 1 "neutron"
+# s:Sc/scorerLog/Quantity                   = "Fluence"
+# s:Sc/scorerLog/Component                  = "MLC"
+# s:Sc/scorerLog/OutputFile                 = "FluenceSpectra_LogBin"
+# s:Sc/scorerLog/IfOutputFileAlreadyExists  = "Overwrite"
+# s:Sc/scorerLog/OutputType 				  = "csv"	# "binary", "csv"
+# i:Sc/scorerLog/EBins                      = 100
+# d:Sc/scorerLog/EBinMin                    = 0.01 MeV
+# d:Sc/scorerLog/EBinMax                    = 110.1 MeV
+# b:Sc/scorerLog/EBinLog                    = "True"
+
+
+###############################################
+# Scoring ambient dose equivalent for neutrons
+###############################################
+sv:Sc/scorerAmbDosePerSource/OnlyIncludeParticlesNamed 				 = 1 "neutron"
+s:Sc/scorerAmbDosePerSource/Quantity                   				 = "AmbientDoseEquivalent"
+s:Sc/scorerAmbDosePerSource/Component                  				 = "MLC"
+s:Sc/scorerAmbDosePerSource/OutputFile                 				 = "AmbientDoseNeutronPerSourceNeutron"
+b:Sc/scorerAmbDosePerSource/OutputToConsole            				 = "True"
+s:Sc/scorerAmbDosePerSource/IfOutputFileAlreadyExists  				 = "Overwrite"
+sv:Sc/scorerAmbDosePerSource/Report                    				 = 1 "Mean"
+# Set the fluence-to-dose conversion factors.
+s:Sc/scorerAmbDosePerSource/GetAmbientDoseEquivalentForParticleNamed = "neutron"
+dv:Sc/scorerAmbDosePerSource/FluenceToDoseConversionEnergies 		 = 58
+2.5314e-08 7.71605e-08 2.35195e-07 6.33404e-07 1.70582e-06 4.05885e-06 1.02746e-05 2.44475e-05 6.18866e-05 0.000142765
+0.000309568 0.000611723 0.00100388 0.00150131 0.00217678 0.00305995 0.00430144 0.00604662 0.00849986  0.0119484
+0.0157877  0.0221931  0.0293242  0.0399651  0.0511969  0.0676476  0.0866593   0.101168     0.1296   0.171243
+0.233382   0.289858    0.37132   0.490632   0.590784   0.711379          1    1.85741    2.95521    4.95083
+9.98711    14.7825     18.937    20.1466    48.9368    98.7183    195.073    504.105    996.138    2182.41
+5086.78     9846.4      29400    99357.1     302853     982103 3.05600e+06 9.91011e+06 MeV
+dv:Sc/scorerAmbDosePerSource/FluenceToDoseConversionValues   		 = 58
+1.04694e-09 1.0279e-09 1.00922e-09 9.90868e-10 9.72854e-10 9.55168e-10 9.37803e-10 9.29239e-10 9.12346e-10 8.95759e-10
+8.79474e-10 8.71443e-10 8.63485e-10 1.07615e-09 1.31681e-09 1.59657e-09 1.91809e-09 2.32559e-09 2.79393e-09 3.35658e-09
+3.99571e-09 4.7131e-09 5.50853e-09 6.55742e-09 7.52478e-09 8.71443e-09 9.8182e-09 1.09608e-08 1.29287e-08 1.56754e-08
+1.86602e-08 2.18095e-08 2.59623e-08 3.06236e-08 3.51412e-08 3.95922e-08 4.93432e-08 4.67006e-08 4.46069e-08 4.26071e-08
+4.69871e-08 5.15014e-08 5.64495e-08 5.24551e-08 3.61218e-08 2.6443e-08 2.2418e-08 2.95202e-08 3.7933e-08 4.31315e-08
+4.93432e-08 5.27769e-08 5.15014e-08 5.05651e-08 5.96437e-08 7.20944e-08 9.0956e-08 1.17594e-07 Sv*mm2
+
+
+##########################
+# Define the proton beam
+##########################
+s:So/ProtonBeam/Type                     = "Beam"
+s:So/ProtonBeam/Component                = "BeamPosition"
+sc:So/ProtonBeam/BeamParticle            = "proton"
+dc:So/ProtonBeam/BeamEnergy              = 230.0 MeV
+u:So/ProtonBeam/BeamEnergySpread         = 0.757504
+s:So/ProtonBeam/BeamPositionDistribution = "Gaussian"
+s:So/ProtonBeam/BeamPositionCutoffShape  = "Ellipse"
+d:So/ProtonBeam/BeamPositionCutoffX      = 10. cm
+d:So/ProtonBeam/BeamPositionCutoffY      = 10. cm
+d:So/ProtonBeam/BeamPositionSpreadX      = 0.65 cm
+d:So/ProtonBeam/BeamPositionSpreadY      = 0.65 cm
+s:So/ProtonBeam/BeamAngularDistribution  = "Gaussian"
+d:So/ProtonBeam/BeamAngularCutoffX       = 90. deg
+d:So/ProtonBeam/BeamAngularCutoffY       = 90. deg
+d:So/ProtonBeam/BeamAngularSpreadX       = 0.0032 rad
+d:So/ProtonBeam/BeamAngularSpreadY       = 0.0032 rad
+ic:So/ProtonBeam/NumberOfHistoriesInRun  = 10
+
+
+##########################
+# Define beam position
+##########################
+s:Ge/BeamPosition/Parent 	= "World"
+s:Ge/BeamPosition/Type   	= "Group"
+d:Ge/BeamPosition/TransX 	= 0. cm
+d:Ge/BeamPosition/TransY 	= 0. cm
+d:Ge/BeamPosition/TransZ 	= 1. m
+d:Ge/BeamPosition/RotX   	= 180. deg
+d:Ge/BeamPosition/RotY   	= 0. deg
+d:Ge/BeamPosition/RotZ   	= 0. deg
+
+
+#################
+# Physics list
+#################
+sv:Ph/Default/Modules = 1 "g4em-standard_opt4"
+
+i:Ts/ShowHistoryCountAtInterval = 10000
+# b:Ts/PauseBeforeQuit = "True"
+
+#################
+# Multithreading
+#################
+i:Ts/NumberOfThreads = 0
+
+
